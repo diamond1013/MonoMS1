@@ -53,9 +53,6 @@ def choose_delta(file,min_a,pre):
                     right=len(list1)
                 if p1 == -1:
                     wrong=len(list1)
-            ‘’‘with open('score-delta.txt','a') as f:
-                print(b,right/(right+wrong),file=f)
-            f.close()’‘’
             list_delta.append(b)
         i = i+1
     min_b = max(list_delta)

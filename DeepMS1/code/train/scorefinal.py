@@ -29,9 +29,6 @@ def choose_score(file,pre,name):
         #if right2/right1>0.9:
         if right/(right+wrong) >= pre:
             list_score.append(c)
-            ‘’‘with open('score-score.txt','a') as f:
-                print(c,right/(right+wrong),file=f)
-            f.close()’‘’
     min_c = min(list_score)
     return min_c
 
