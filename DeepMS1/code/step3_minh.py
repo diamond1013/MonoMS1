@@ -6,6 +6,10 @@ Created on Mon Oct 10 10:36:00 2022
 """
 import numpy as np
 import pandas as pd
+from pandas import DataFrame
+
+from train import protein
+from train import scorefinal
 
 from train import min_h
 from train import protein_score
@@ -34,3 +38,20 @@ df_all = pd.concat([d2,d3],axis=0)
 df_all.to_csv('test_result_all.csv',index=None)
 protein_score.chuli('test_result_all.csv','database.csv')
 
+file0 = pd.read_csv('test_result_all.csv')
+base = pd.read_csv('database.csv')
+file0 = protein.final(file0,base)
+
+file1 = file0.sort_values(by="score")
+file1.reset_index(inplace=True,drop=True)
+min_c = scorefinal.choose_score(file1,0.99,'score')
+file2 = file1[file1['score'] >= min_c]
+file2n = file2[['p1','p2','charge','fraction','DB peptide']]
+file2n = file2n.rename(columns={'p1': 'Feature Id', 'p2': 'Peptide'})
+file2n.to_csv('0.99-result_final.csv',index=None)
+
+min_c = scorefinal.choose_score(file1,0.95,'score')
+file3 = file1[file1['score'] >= min_c]
+file3n = file3[['p1','p2','charge','fraction','DB peptide']]
+file3n = file3n.rename(columns={'p1': 'Feature Id', 'p2': 'Peptide'})
+file3n.to_csv('0.95-result_final.csv',index=None)
